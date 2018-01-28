@@ -125,7 +125,13 @@ public:
 	{
 		return Iterator(m_pTail->pNext);
 	}
-	void print() const;
+
+	/// Sort with merge sort
+	void sort();
+
+private:
+	Node * merge(Node * left, Node * right);
+	Node * mergeSort(Node * source, size_t size);
 };
 
 #include"ForwardList.hpp"

@@ -196,21 +196,6 @@ void Forward_List<T>::reverse()
 	m_pHead->pNext = NULL;
 	m_pHead = first;
 }
-template<class T>
-void Forward_List<T>::print() const
-{
-	if (empty())
-	{
-		std::cout << "The list is empty!" << std::endl;
-		return;
-	}
-	Node * read = m_pHead;
-	while (read)
-	{
-		std::cout << read->data << std::endl;
-		read = read->pNext;
-	}
-}
 
 template<class T>
 bool Forward_List<T>::empty() const
@@ -222,4 +207,106 @@ template<class T>
 size_t Forward_List<T>::size() const
 {
 	return m_size;
+}
+
+/// Sort ForwarList with merge sort
+template<class T>
+void Forward_List<T>::sort()
+{
+	m_pHead = mergeSort(m_pHead,m_size);
+	Node * start = m_pHead;
+	while (start->pNext != NULL)
+	{
+		start = start->pNext;
+	}
+	m_pTail = start;
+}
+
+template<class T>
+typename Forward_List<T>::Node * Forward_List<T>::mergeSort(Node * source, size_t size)
+{
+	if (size == 1)
+		return source;
+
+	Node * left = source;
+	Node * right = source;
+
+	size_t sizeLeft = 0;
+	size_t sizeRight = size;
+	for (size_t i = 0; i < size/2; i++)
+	{
+		if (i+1 == size/2)
+		{
+			Node * temp = right;
+			right = right->pNext;
+			--sizeRight;
+			++sizeLeft;
+			temp->pNext = NULL;
+			continue;
+		}
+
+		right = right->pNext;
+		--sizeRight;
+		++sizeLeft;
+		
+	}
+
+	left = mergeSort(left, sizeLeft);
+	right = mergeSort(right, sizeRight);
+	Node * result = merge(left, right);
+
+	return result;
+}
+template<class T>
+typename Forward_List<T>::Node * Forward_List<T>::merge(Node * left, Node * right)
+{
+	if (left == NULL) return right;
+	if (right == NULL) return left;
+
+	Node * head = NULL;
+	if (left->data < right->data)
+	{
+		head = left;
+		left = left->pNext;
+	}
+	else
+	{
+		head = right;
+		right = right->pNext;
+	}
+	Node * nextNode = head;
+
+	while (left && right)
+	{
+		
+		if (left->data < right->data)
+		{
+			nextNode->pNext = left;
+			left = left->pNext;
+			nextNode = nextNode->pNext;
+		}
+		else
+		{
+			nextNode->pNext = right;
+			right = right->pNext;
+			nextNode = nextNode->pNext;
+		}
+		
+	}
+	
+
+	while (left)
+	{
+		nextNode->pNext = left;
+		left = left->pNext;
+		nextNode = nextNode->pNext;
+	}
+	while (right)
+	{
+		nextNode->pNext = right;
+		right = right->pNext;
+		nextNode = nextNode->pNext;
+	}
+
+	return head;
 }

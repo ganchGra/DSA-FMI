@@ -1,4 +1,5 @@
 #include<iostream>
+#include<ctime>
 #include"ForwardList.h"
 
 void Test_Create_Empty_List()
@@ -6,7 +7,7 @@ void Test_Create_Empty_List()
 	std::cout << "Create empty forward list array...";
 
 	Forward_List<int> test;
-	std::cout << "OK!\n";
+	std::cout << "OK!\n\n";
 }
 void Test_Copy_Two_List()
 {
@@ -14,7 +15,7 @@ void Test_Copy_Two_List()
 
 	Forward_List<int> test1;
 	Forward_List<int> test2 = test1;
-	std::cout << "OK!\n";
+	std::cout << "OK!\n\n";
 }
 void Test_Asign_Array_From_Other()
 {
@@ -23,26 +24,26 @@ void Test_Asign_Array_From_Other()
 	Forward_List<int> test2;
 
 	test1 = test2;
-	std::cout << "OK!\n";
+	std::cout << "OK!\n\n";
 }
 void Test_Clear_List()
 {
 	std::cout << "Clear array...";
 	Forward_List<int> test;
 	test.clear();
-	std::cout << "OK!\n";
+	std::cout << "OK!\n\n";
 }
 void Test_Get_Size_Empty_List()
 {
 	std::cout << "Get size of empty list...";
 	Forward_List<int> test;
-	std::cout << "Size: " << test.size() << std::endl;
+	std::cout << "Size: " << test.size() << "\n\n";
 }
 void Test_Is_Empty()
 {
 	std::cout << "Is empty list without value...";
 	Forward_List<int> test;
-	std::cout << ((test.empty()) ? "True\n" : "False\n");
+	std::cout << ((test.empty()) ? "True\n\n" : "False\n\n");
 
 
 }
@@ -75,6 +76,7 @@ void Test_Element_Access()
 	{
 		std::cout << e.what() << std::endl;
 	}
+	std::cout << std::endl;
 }
 void Test_Push_Back_Element()
 {
@@ -85,6 +87,7 @@ void Test_Push_Back_Element()
 		test.push_back(i);
 		std::cout << "[Added: " << i << " | New size: " << test.size() << "]\n";
 	}
+	std::cout << std::endl;
 }
 void Test_Pop_Back_Element()
 {
@@ -107,6 +110,38 @@ void Test_Pop_Back_Element()
 		std::cout << "\nSize: " << test.size() << std::endl;
 		test.pop_back();
 	}
+	std::cout << std::endl;
+}
+void Test_Sort()
+{
+	Forward_List<int> test;
+
+	srand(time(NULL));
+	std::cout << "Add rand elements...\n";
+	for (size_t i = 0; i < 10; i++)
+	{
+		int el = rand() % 20;
+		test.push_back(el);
+	}
+	Forward_List<int>::Iterator it = test.begin();
+
+	std::cout << "List before sorting: ";
+	while (it != test.end())
+	{
+		std::cout << *it << " ";
+		++it;
+	}
+	std::cout << std::endl;
+
+	test.sort();
+	std::cout << "List after sorting: ";
+	it = test.begin();
+	while (it != test.end())
+	{
+		std::cout << *it << " ";
+		++it;
+	}
+	std::cout << std::endl;
 }
 void Test_ForwardList()
 {
@@ -119,6 +154,7 @@ void Test_ForwardList()
 	Test_Element_Access();
 	Test_Push_Back_Element();
 	Test_Pop_Back_Element();
+	Test_Sort();
 }
 
 int main()
